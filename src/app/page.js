@@ -1,24 +1,27 @@
 import { createClient } from "@supabase/supabase-js";
+import { revalidatePath } from "next/cache";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-export default function TodoList() {
+export default async function TodoList() {
+  const { data, error } = await supabase.from("todos").select();
+
   const addTodo = async (formData) => {
     "use server";
-    const supabaseUrl = "https://wkgmsqqhdwznniikuofo.supabase.co";
-    const supabaseKey = process.env.SUPABASE_KEY;
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
     const todoItem = formData.get("todo");
-
     if (!todoItem) {
       return;
     }
-
     // Save todo item to database
     const { data, error } = await supabase.from("todos").insert({
       todo: todoItem,
     });
     console.log(error);
+    revalidatePath("/");
   };
+
   return (
     <>
       <div className="container m-14 text-center">
@@ -45,6 +48,16 @@ export default function TodoList() {
               </button>
             </div>
           </form>
+          <div>
+            <ul>
+              {data &&
+                data.map((todo) => (
+                  <li key={todo.id}>
+                    <span>{todo.todo}</span>
+                  </li>
+                ))}
+            </ul>
+          </div>
         </div>
       </div>
     </>

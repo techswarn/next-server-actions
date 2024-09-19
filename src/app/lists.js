@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 export default function List() {
   "use client";
   const [todos, setTodos] = useState();
-  const supabaseUrl = "https://wkgmsqqhdwznniikuofo.supabase.co";
-  const supabaseKey = process.env.SUPABASE_KEY;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
   useEffect(() => {
     getTodos();
