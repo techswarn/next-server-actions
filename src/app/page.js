@@ -18,7 +18,7 @@ export default async function TodoList() {
     const { data, error } = await supabase.from("todos").insert({
       todo: todoItem,
     });
-    console.log(error);
+    console.log( 'err' + error);
     revalidatePath("/");
   };
 
