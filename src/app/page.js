@@ -1,31 +1,31 @@
 import { createClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+// const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+// const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default async function TodoList() {
-  const { data, error } = await supabase.from("todos").select();
+  // const { data, error } = await supabase.from("todos").select();
 
-  const addTodo = async (formData) => {
-    "use server";
+  // const addTodo = async (formData) => {
+  //   "use server";
 
-    const todoItem = formData.get("todo");
-    if (!todoItem) {
-      return;
-    }
-    // Save todo item to database
-    const { data, error } = await supabase.from("todos").insert({
-      todo: todoItem,
-    });
-    console.log( 'err' + error);
-    revalidatePath("/");
-  };
+  //   const todoItem = formData.get("todo");
+  //   if (!todoItem) {
+  //     return;
+  //   }
+  //   // Save todo item to database
+  //   const { data, error } = await supabase.from("todos").insert({
+  //     todo: todoItem,
+  //   });
+  //   console.log( 'err' + error);
+  //   revalidatePath("/");
+  // };
 
   return (
     <>
       <div className="container m-14 text-center">
-        <h2 className="mb-4 text-xl font-semibold">Server Actions Demo</h2>
+        {/* <h2 className="mb-4 text-xl font-semibold">Server Actions Demo</h2>
         <div>
           <form action={addTodo} method="POST">
             <div>
@@ -51,14 +51,15 @@ export default async function TodoList() {
           <div>
             <ul>
               {data &&
-                data.map((todo) => (
+                data?.map((todo) => (
                   <li key={todo.id}>
                     <span>{todo.todo}</span>
                   </li>
                 ))}
             </ul>
           </div>
-        </div>
+        </div> */}
+        <h1>Hello NEXTJS</h1>
       </div>
     </>
   );
